@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <map>
+#include <cstdlib>
 
 
 
@@ -10,6 +11,7 @@ class Hash {
 		};
 		
 		int value;
+		int cnt = 0;
 
 		std::map <char,Hash*> node;
 		
@@ -20,7 +22,7 @@ class Hash {
 				
 			for (int i = 0; i < len; i++) {
 				if (index->node[key[i]] == NULL) {
-					return NULL;
+					return 0;
 				}
 				index = index->node[key[i]];
 			}
@@ -34,9 +36,37 @@ class Hash {
 				if (index->node[key[i]] == NULL)
 					index->node[key[i]] = new Hash;
 				index = index->node[key[i]];
+				index->cnt ++;
 			}
 			index->value = val;
 			return val;
+		}
+		
+		int deleting (char* key) { 
+			Hash* index = this;
+			Hash **ref;
+			int result;
+			int len = strlen(key);
+			ref = (Hash **)malloc(sizeof(Hash*) * len);
+			for (int i = 0; i < len; i++) {
+				index->node[key[i]]->cnt --;
+				index = index->node[key[i]];
+				ref [i] = index;
+			}
+			result = index->value;
+			for (int i = len - 1; i >= 0; i--) {
+				if (ref[i]->cnt == 0) {
+					delete (ref[i]);
+				} else {
+					break;
+				}
+			}
+			free (ref);
+			return result;
+		}
+		
+		int renaming(char* key, char *key2) {
+			return this->set(key2, this->deleting(key));
 		}
 };
 
@@ -49,6 +79,9 @@ int main () {
 	printf ("%i\n", h->set("asd3", 12356));
 	
 	printf ("%i\n", h->get("asd"));
+	printf ("%i\n", h->deleting("asd"));
+	printf ("%i\n", h->renaming("asd3", "kush"));
+	printf ("%i\n", h->get("kush"));
 	
 	
 }
