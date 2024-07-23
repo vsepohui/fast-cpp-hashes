@@ -53,5 +53,10 @@ FROM STRING EXPAMPLE:
                             "_" -> S -> H -> I -> W -> A -> (END)
 
 
+
+STL <map> NEEDFULL ONLY FOR CHAR-MAPPING IN NODES!
+
+
+
   
   
