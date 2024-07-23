@@ -49,8 +49,8 @@ FROM STRING EXPAMPLE:
                       O -> V -> (END)
                        \
                           D -> (END)
-                           \
-                             S -> H -> I -> W -> A -> (END)
+                           \ 
+                            "_" -> S -> H -> I -> W -> A -> (END)
 
 
   
