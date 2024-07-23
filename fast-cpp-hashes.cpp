@@ -104,18 +104,18 @@ int main () {
 	
 	
 	
-	printf ("%i\n", h->set("asd", 123));
-	printf ("%i\n", h->get("asd"));
-	printf ("%i\n", h->set("asd2", 1234));
-	printf ("%i\n", h->set("asd3", 12356));
+	printf ("%d\n", h->set("asd", 123));
+	printf ("%d\n", h->get("asd"));
+	printf ("%d\n", h->set("asd2", 1234));
+	printf ("%d\n", h->set("asd3", 12356));
 	
-	printf ("%i\n", h->deleting("asd54"));	
-	printf ("%i\n", h->get("asd"));	
+	printf ("%d\n", h->deleting("asd54"));	
+	printf ("%d\n", h->get("asd"));	
 	
-	printf ("%i\n", h->get("asd"));
-	printf ("%i\n", h->deleting("asd"));
-	printf ("%i\n", h->renaming("asd3", "kush"));
-	printf ("%i\n", h->get("kush"));
+	printf ("%d\n", h->get("asd"));
+	printf ("%d\n", h->deleting("asd"));
+	printf ("%d\n", h->renaming("asd3", "kush"));
+	printf ("%d\n", h->get("kush"));
 	
 	
 }
