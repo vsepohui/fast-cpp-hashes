@@ -15,16 +15,26 @@ class Hash {
 
 		std::map <char,Hash*> node;
 		
+		
+		operator bool() {
+			return this->node.size() != 0;
+		}
+		
+		Hash * step (char c) {
+			Hash *h = this->node[c];
+			if(!h) return NULL;
+			return h;
+		}
+		
 
 		int get (char* key) {
 			Hash* index = this;
 			int len = strlen(key);
 				
 			for (int i = 0; i < len; i++) {
-				if (index->node[key[i]] == NULL) {
-					return 0;
-				}
-				index = index->node[key[i]];
+				index = index->step(key[i]);
+				
+				if (!index) return 0;
 			}
 			return index->value;
 		}
@@ -49,19 +59,38 @@ class Hash {
 			int len = strlen(key);
 			ref = (Hash **)malloc(sizeof(Hash*) * len);
 			for (int i = 0; i < len; i++) {
-				index->node[key[i]]->cnt --;
-				index = index->node[key[i]];
-				ref [i] = index;
-			}
-			result = index->value;
-			for (int i = len - 1; i >= 0; i--) {
-				if (ref[i]->cnt == 0) {
-					delete (ref[i]);
+				
+				if (key[i]) {
+					index = index->step(key[i]);
+					if (!index) break;
+					
+					index->cnt --;
+								
+					ref [i] = index;
 				} else {
 					break;
 				}
 			}
-			free (ref);
+			
+			
+			if (!index) return 0;
+			
+			
+			result = index->value;
+			for (int i = len - 1; i >= 0; i--) {
+				if (ref[i]->cnt == 0) {
+					if (ref[i]) {
+						delete (ref[i]);
+					} else {
+						break;
+					}
+				} else {
+					break;
+				}
+			}
+			
+			
+			if (ref) free (ref);
 			return result;
 		}
 		
@@ -73,10 +102,15 @@ class Hash {
 int main () {
 	Hash *h = new Hash;
 	
+	
+	
 	printf ("%i\n", h->set("asd", 123));
 	printf ("%i\n", h->get("asd"));
 	printf ("%i\n", h->set("asd2", 1234));
 	printf ("%i\n", h->set("asd3", 12356));
+	
+	printf ("%i\n", h->deleting("asd54"));	
+	printf ("%i\n", h->get("asd"));	
 	
 	printf ("%i\n", h->get("asd"));
 	printf ("%i\n", h->deleting("asd"));
